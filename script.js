@@ -91,7 +91,9 @@ const translations = {
     'fab.backToTop': 'Back to top',
     'fab.whatsapp': 'Chat with Magaly on WhatsApp',
     'form.invalid': 'Please fill in every field with a valid email.',
-    'form.success': 'Thanks, {name}! Redirecting you to email…'
+    'form.sending': 'Sending…',
+    'form.success': 'Thanks, {name}! Your message has been sent.',
+    'form.error': 'Something went wrong — please try again or email itismagaly@gmail.com directly.'
   },
   es: {
     'nav.about': 'Sobre mí',
@@ -178,7 +180,9 @@ const translations = {
     'fab.backToTop': 'Volver arriba',
     'fab.whatsapp': 'Chatea con Magaly por WhatsApp',
     'form.invalid': 'Por favor completa todos los campos con un correo válido.',
-    'form.success': '¡Gracias, {name}! Te estamos redirigiendo a tu correo…'
+    'form.sending': 'Enviando…',
+    'form.success': '¡Gracias, {name}! Tu mensaje ha sido enviado.',
+    'form.error': 'Algo salió mal — intenta de nuevo o escribe directamente a itismagaly@gmail.com.'
   }
 };
 
@@ -358,16 +362,19 @@ if (!prefersReducedMotion) {
   });
 }
 
-/* Contact form — client-side only, no backend */
+/* Contact form — submits to Web3Forms so messages arrive by email */
 const form = document.getElementById('contactForm');
 const status = document.getElementById('formStatus');
+const submitBtn = form.querySelector('button[type="submit"]');
 
-form.addEventListener('submit', (e) => {
+form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const name = form.name.value.trim();
   const email = form.email.value.trim();
   const message = form.message.value.trim();
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  status.classList.remove('error');
 
   if (!name || !message || !emailPattern.test(email)) {
     status.textContent = translations[currentLang]['form.invalid'];
@@ -375,12 +382,34 @@ form.addEventListener('submit', (e) => {
     return;
   }
 
-  status.classList.remove('error');
-  status.textContent = translations[currentLang]['form.success'].replace('{name}', name.split(' ')[0]);
+  submitBtn.disabled = true;
+  status.textContent = translations[currentLang]['form.sending'];
 
-  const subject = encodeURIComponent(`Collaboration enquiry from ${name}`);
-  const body = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
-  window.location.href = `mailto:itismagaly@gmail.com?subject=${subject}&body=${body}`;
+  try {
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        access_key: form.access_key.value,
+        subject: form.subject.value,
+        name,
+        email,
+        message,
+        botcheck: form.botcheck.checked,
+      }),
+    });
+    const result = await response.json();
 
-  form.reset();
+    if (result.success) {
+      status.textContent = translations[currentLang]['form.success'].replace('{name}', name.split(' ')[0]);
+      form.reset();
+    } else {
+      throw new Error(result.message || 'Submission failed');
+    }
+  } catch (err) {
+    status.textContent = translations[currentLang]['form.error'];
+    status.classList.add('error');
+  } finally {
+    submitBtn.disabled = false;
+  }
 });
