@@ -876,6 +876,7 @@ a.card { cursor: pointer; }
   border-top: 1px solid rgba(240,234,214,0.1);
 }
 .logo-footer { display: inline-block; margin-bottom: 0.8rem; color: var(--limestone); }
+.logo-footer span { color: #DE7440; }
 .footer p { margin: 0; font-size: 0.85rem; }
 
 .social-links {
