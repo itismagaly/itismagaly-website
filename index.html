@@ -5,14 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google-site-verification" content="sNaOWu174qwGt184i1YKpu8s0p1bx9-WuOgKT7xO998" />
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-E2ERMTDMHC"></script>
+<!-- Google Analytics — script is only injected after cookie consent is granted, see script.js -->
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-E2ERMTDMHC');
 </script>
 
 <title>itismagaly — Journalist, Storyteller &amp; AI Media Creator</title>
@@ -472,7 +468,24 @@
   </div>
 
   <p>&copy; <span id="year"></span> Magaly Bustamante. <span data-i18n="footer.tagline">Journalist &middot; Storyteller &middot; AI Media Creator.</span></p>
+
+  <p class="footer-legal">
+    <a href="/privacy.html" data-i18n="footer.privacy">Privacy Policy</a>
+    <span aria-hidden="true">&middot;</span>
+    <button type="button" id="cookieSettingsLink" class="footer-legal-btn" data-i18n="footer.cookieSettings">Cookie Settings</button>
+  </p>
 </footer>
+
+<!-- Cookie consent -->
+<div class="cookie-consent" id="cookieConsent" role="dialog" aria-live="polite" aria-label="Cookie consent">
+  <p data-i18n-html="cookies.text">
+    I use cookies to understand how visitors use this site (Google Analytics). You can accept or decline &mdash; see the <a href="/privacy.html">Privacy Policy</a> for details.
+  </p>
+  <div class="cookie-consent-actions">
+    <button type="button" id="cookieReject" class="btn btn-ghost" data-i18n="cookies.reject">Decline</button>
+    <button type="button" id="cookieAccept" class="btn btn-primary" data-i18n="cookies.accept">Accept</button>
+  </div>
+</div>
 
 <div class="floating-actions">
   <button type="button" class="fab fab-top" id="backToTop" data-i18n-aria="fab.backToTop" aria-label="Back to top">

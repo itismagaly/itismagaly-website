@@ -88,12 +88,17 @@ const translations = {
     'contact.form.messagePh': 'Tell me about your project…',
     'contact.form.submit': 'Send Message',
     'footer.tagline': 'Journalist · Storyteller · AI Media Creator.',
+    'footer.privacy': 'Privacy Policy',
+    'footer.cookieSettings': 'Cookie Settings',
     'fab.backToTop': 'Back to top',
     'fab.whatsapp': 'Chat with Magaly on WhatsApp',
     'form.invalid': 'Please fill in every field with a valid email.',
     'form.sending': 'Sending…',
     'form.success': 'Thanks, {name}! Your message has been sent.',
-    'form.error': 'Something went wrong — please try again or email itismagaly@gmail.com directly.'
+    'form.error': 'Something went wrong — please try again or email itismagaly@gmail.com directly.',
+    'cookies.text': 'I use cookies to understand how visitors use this site (Google Analytics). You can accept or decline — see the <a href="/privacy.html">Privacy Policy</a> for details.',
+    'cookies.accept': 'Accept',
+    'cookies.reject': 'Decline'
   },
   es: {
     'nav.about': 'Sobre mí',
@@ -177,12 +182,17 @@ const translations = {
     'contact.form.messagePh': 'Cuéntame sobre tu proyecto…',
     'contact.form.submit': 'Enviar Mensaje',
     'footer.tagline': 'Periodista · Narradora · Creadora de Medios con IA.',
+    'footer.privacy': 'Política de Privacidad',
+    'footer.cookieSettings': 'Configuración de Cookies',
     'fab.backToTop': 'Volver arriba',
     'fab.whatsapp': 'Chatea con Magaly por WhatsApp',
     'form.invalid': 'Por favor completa todos los campos con un correo válido.',
     'form.sending': 'Enviando…',
     'form.success': '¡Gracias, {name}! Tu mensaje ha sido enviado.',
-    'form.error': 'Algo salió mal — intenta de nuevo o escribe directamente a itismagaly@gmail.com.'
+    'form.error': 'Algo salió mal — intenta de nuevo o escribe directamente a itismagaly@gmail.com.',
+    'cookies.text': 'Uso cookies para entender cómo se usa este sitio (Google Analytics). Puedes aceptar o rechazar — mira la <a href="/privacy.html">Política de Privacidad</a> para más detalles.',
+    'cookies.accept': 'Aceptar',
+    'cookies.reject': 'Rechazar'
   }
 };
 
@@ -412,4 +422,46 @@ form.addEventListener('submit', async (e) => {
   } finally {
     submitBtn.disabled = false;
   }
+});
+
+/* Cookie consent — Google Analytics only loads after explicit accept */
+const GA_MEASUREMENT_ID = 'G-E2ERMTDMHC';
+const COOKIE_CONSENT_KEY = 'itismagaly-cookie-consent';
+
+const loadAnalytics = () => {
+  if (document.getElementById('ga-script')) return;
+  const script = document.createElement('script');
+  script.id = 'ga-script';
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+  document.head.appendChild(script);
+  gtag('js', new Date());
+  gtag('config', GA_MEASUREMENT_ID);
+};
+
+const cookieConsent = document.getElementById('cookieConsent');
+const cookieAccept = document.getElementById('cookieAccept');
+const cookieReject = document.getElementById('cookieReject');
+const cookieSettingsLink = document.getElementById('cookieSettingsLink');
+
+const storedConsent = localStorage.getItem(COOKIE_CONSENT_KEY);
+if (storedConsent === 'granted') {
+  loadAnalytics();
+} else if (storedConsent !== 'denied') {
+  cookieConsent.classList.add('visible');
+}
+
+cookieAccept.addEventListener('click', () => {
+  localStorage.setItem(COOKIE_CONSENT_KEY, 'granted');
+  loadAnalytics();
+  cookieConsent.classList.remove('visible');
+});
+
+cookieReject.addEventListener('click', () => {
+  localStorage.setItem(COOKIE_CONSENT_KEY, 'denied');
+  cookieConsent.classList.remove('visible');
+});
+
+cookieSettingsLink.addEventListener('click', () => {
+  cookieConsent.classList.add('visible');
 });
