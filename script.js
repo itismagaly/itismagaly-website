@@ -98,7 +98,14 @@ const translations = {
     'form.error': 'Something went wrong — please try again or email itismagaly@gmail.com directly.',
     'cookies.text': 'I use cookies to understand how visitors use this site (Google Analytics). You can accept or decline — see the <a href="/privacy.html">Privacy Policy</a> for details.',
     'cookies.accept': 'Accept',
-    'cookies.reject': 'Decline'
+    'cookies.reject': 'Decline',
+    'newsletter.kicker': 'Stay in the loop',
+    'newsletter.title': 'Stories, before anyone else sees them.',
+    'newsletter.sub': 'Behind-the-scenes from Understory, AI video experiments, and the occasional slot opening up for new projects.',
+    'newsletter.label': 'Email address',
+    'newsletter.placeholder': 'you@email.com',
+    'newsletter.submit': 'Subscribe',
+    'newsletter.note': 'No spam, ever — unsubscribe anytime.'
   },
   es: {
     'nav.about': 'Sobre mí',
@@ -192,7 +199,14 @@ const translations = {
     'form.error': 'Algo salió mal — intenta de nuevo o escribe directamente a itismagaly@gmail.com.',
     'cookies.text': 'Uso cookies para entender cómo se usa este sitio (Google Analytics). Puedes aceptar o rechazar — mira la <a href="/privacy.html">Política de Privacidad</a> para más detalles.',
     'cookies.accept': 'Aceptar',
-    'cookies.reject': 'Rechazar'
+    'cookies.reject': 'Rechazar',
+    'newsletter.kicker': 'Mantente al tanto',
+    'newsletter.title': 'Historias, antes que nadie más las vea.',
+    'newsletter.sub': 'Detrás de cámaras de Understory, experimentos con video de IA, y algún cupo que se abra para nuevos proyectos.',
+    'newsletter.label': 'Correo electrónico',
+    'newsletter.placeholder': 'tu@correo.com',
+    'newsletter.submit': 'Suscribirme',
+    'newsletter.note': 'Sin spam, nunca — cancela cuando quieras.'
   }
 };
 
