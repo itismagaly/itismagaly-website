@@ -439,7 +439,7 @@ form.addEventListener('submit', async (e) => {
 });
 
 /* Cookie consent — Google Analytics only loads after explicit accept */
-const GA_MEASUREMENT_ID = 'G-E2ERMTDMHC';
+const GA_MEASUREMENT_ID = 'G-14VY74J6NK';
 const COOKIE_CONSENT_KEY = 'itismagaly-cookie-consent';
 
 const loadAnalytics = () => {
