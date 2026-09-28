@@ -5,10 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google-site-verification" content="sNaOWu174qwGt184i1YKpu8s0p1bx9-WuOgKT7xO998" />
 
-<!-- Google Analytics — script is only injected after cookie consent is granted, see script.js -->
+<!-- Google Analytics (Consent Mode v2) — storage is denied by default; no cookies are set until
+     the visitor accepts on the banner. Without consent GA only receives cookieless pings. See script.js -->
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    analytics_storage: 'denied'
+  });
+  try {
+    if (localStorage.getItem('itismagaly-cookie-consent') === 'granted') {
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+    }
+  } catch (e) {}
 </script>
 
 <title>itismagaly — Journalist, Storyteller &amp; AI Media Creator</title>

@@ -438,7 +438,8 @@ form.addEventListener('submit', async (e) => {
   }
 });
 
-/* Cookie consent — Google Analytics only loads after explicit accept */
+/* Cookie consent — GA loads for everyone in Consent Mode v2 (defaults set in index.html);
+   analytics cookies are only allowed after explicit accept */
 const GA_MEASUREMENT_ID = 'G-14VY74J6NK';
 const COOKIE_CONSENT_KEY = 'itismagaly-cookie-consent';
 
@@ -453,26 +454,31 @@ const loadAnalytics = () => {
   gtag('config', GA_MEASUREMENT_ID);
 };
 
+const setAnalyticsConsent = (granted) => {
+  gtag('consent', 'update', { analytics_storage: granted ? 'granted' : 'denied' });
+};
+
 const cookieConsent = document.getElementById('cookieConsent');
 const cookieAccept = document.getElementById('cookieAccept');
 const cookieReject = document.getElementById('cookieReject');
 const cookieSettingsLink = document.getElementById('cookieSettingsLink');
 
+loadAnalytics();
+
 const storedConsent = localStorage.getItem(COOKIE_CONSENT_KEY);
-if (storedConsent === 'granted') {
-  loadAnalytics();
-} else if (storedConsent !== 'denied') {
+if (storedConsent !== 'granted' && storedConsent !== 'denied') {
   cookieConsent.classList.add('visible');
 }
 
 cookieAccept.addEventListener('click', () => {
   localStorage.setItem(COOKIE_CONSENT_KEY, 'granted');
-  loadAnalytics();
+  setAnalyticsConsent(true);
   cookieConsent.classList.remove('visible');
 });
 
 cookieReject.addEventListener('click', () => {
   localStorage.setItem(COOKIE_CONSENT_KEY, 'denied');
+  setAnalyticsConsent(false);
   cookieConsent.classList.remove('visible');
 });
 
